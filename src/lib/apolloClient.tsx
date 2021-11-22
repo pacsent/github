@@ -15,10 +15,9 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | undefined
 const httpLink = new HttpLink({
   uri: "https://api.github.com/graphql",
   headers: {
-    authorization: "Bearer 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",
+    authorization: `Bearer ${process.env.GITHUB_API_KEY}`,
   },
 })
-
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>
