@@ -1,0 +1,44 @@
+{
+  "React Component": {
+    "scope": "typescript, javascript, typescriptreact",
+    "prefix": "componentReact",
+    "body": [
+      "import clsx from 'clsx'",
+      "import styles from './${1:name}.module.scss'",
+      "",
+      "interface Props {",
+      "  className?: string;",
+      "}",
+      "",
+      "function ${1:name}({className}: Props) {",
+      "  return (",
+      "    <div className={clsx(className, styles.main)}>",
+      "      $0",
+      "    </div>",
+      "  )",
+      "};",
+      "",
+      "export default ${1:name};",
+      ""
+    ],
+    "description": "React Functional Component"
+  },
+  "React ClassName": {
+    "scope": "typescript, javascript, typescriptreact",
+    "prefix": "classname",
+    "body": ["className={styles$0}"],
+    "description": "React ClassName"
+  },
+  "React Div": {
+    "scope": "typescript, javascript, typescriptreact",
+    "prefix": "divreact",
+    "body": ["<div className={styles$1}>$0</div>"],
+    "description": "React Div"
+  },
+  "Print to console": {
+    "scope": "javascript,typescript",
+    "prefix": "consolelog",
+    "body": ["console.log('$1');", "$2"],
+    "description": "Log output to console"
+  }
+}
