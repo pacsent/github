@@ -1,5 +1,8 @@
 {
   "name": "github",
+  "engines": {
+    "node": "16.x"
+  },
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
