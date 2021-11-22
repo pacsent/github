@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { GetServerSidePropsContext, GetStaticPaths } from "next"
+import { GetStaticPaths, GetStaticPropsContext } from "next"
 import { useRouter } from "next/router"
 import { initializeApollo } from "lib/apolloClient"
 import { GET_ISSUE } from "lib/queries"
@@ -24,7 +24,7 @@ function Issue({ params }) {
 
 export default Issue
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const apolloClient = initializeApollo()
   await apolloClient.query({
     query: GET_ISSUE,

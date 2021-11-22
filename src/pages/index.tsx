@@ -13,7 +13,7 @@ export default function Index() {
   return <Home data={data?.repository.issues.edges} />
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const apolloClient = initializeApollo()
   await apolloClient.query({
     query: GET_ISSUES,
