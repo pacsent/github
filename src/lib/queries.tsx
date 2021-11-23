@@ -9,6 +9,7 @@ export const GET_ISSUES = gql`
             id
             number
             title
+            body
             closed
             url
             createdAt

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import clsx from "clsx"
 import IssueCard from "molecules/IssueCard/IssueCard"
-import { Issue, specialties, Specialty } from "types/types"
+import { Issue } from "types/types"
 import styles from "./IssueList.module.scss"
 
 interface Props {
@@ -11,51 +11,32 @@ interface Props {
 
 function IssueList({ className, data }: Props) {
   const [issues, setIssues] = useState(data)
-  const [filters, setFilters] = useState({})
-  const [searchTerm, setSearchTerm] = useState("")
-  const [activeFilters, setActiveFilters] = useState<Specialty[]>([])
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [closed, setClosed] = useState<boolean>(false)
 
   useEffect(() => {
     setIssues(data)
   }, [data])
 
   useEffect(() => {
-    const active: Specialty[] = []
-    for (const [key, value] of Object.entries(filters)) {
-      if (value) active.push(key)
-    }
-    setActiveFilters(active)
-  }, [filters])
+    console.log({ searchTerm, closed })
 
-  useEffect(() => {
-    const filtering =
-      activeFilters.length > 0 && activeFilters.length < specialties.length
-    if (!searchTerm && !filtering) {
-      setIssues(data)
-      return
+    let results = data?.filter((issue) => issue.node.closed === closed)
+    console.log({ results })
+
+    if (searchTerm) {
+      results = data?.filter(
+        (issue) =>
+          issue.node.title?.toLowerCase().includes(searchTerm) ||
+          issue.node.body?.toLowerCase().includes(searchTerm)
+      )
     }
 
-    // let results = data?.filter((issue) =>
-    //   issue.name.toLowerCase().includes(searchTerm)
-    // )
-
-    // if (filtering) {
-    //   results = results?.filter((issue) =>
-    //     issue.specialties?.some((s) => activeFilters.includes(s))
-    //   )
-    // }
-
-    // setIssues(results)
-  }, [activeFilters, searchTerm])
+    setIssues(results)
+  }, [searchTerm, closed, data])
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchTerm(e.target.value.toLowerCase())
-  }
-
-  function handleFilter(e: React.ChangeEvent<HTMLInputElement>) {
-    const filter = e.target.id
-    const checked = e.target.checked
-    setFilters({ ...filters, [filter]: checked })
   }
 
   return (
@@ -67,6 +48,20 @@ function IssueList({ className, data }: Props) {
         value={searchTerm}
         onChange={handleSearch}
       />
+      <div>
+        <button
+          className={clsx(styles.status, !closed && styles.status_active)}
+          onClick={() => setClosed(false)}
+        >
+          Open
+        </button>
+        <button
+          className={clsx(styles.status, closed && styles.status_active)}
+          onClick={() => setClosed(true)}
+        >
+          Closed
+        </button>
+      </div>
       <div className={styles.list}>
         {issues?.map((issue, i) => (
           <IssueCard key={issue.node.id} data={issue.node} />
