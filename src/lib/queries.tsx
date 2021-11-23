@@ -3,13 +3,12 @@ import { gql } from "@apollo/client"
 export const GET_ISSUES = gql`
   query GetIssues {
     repository(owner: "facebook", name: "react") {
-      issues(first: 100, orderBy: { field: CREATED_AT, direction: DESC }) {
+      issues(first: 10, orderBy: { field: CREATED_AT, direction: DESC }) {
         edges {
           node {
             id
             number
             title
-            body
             closed
             url
             createdAt

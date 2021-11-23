@@ -18,6 +18,7 @@ const httpLink = new HttpLink({
     authorization: `Bearer ${process.env.GITHUB_API_KEY}`,
   },
 })
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>
